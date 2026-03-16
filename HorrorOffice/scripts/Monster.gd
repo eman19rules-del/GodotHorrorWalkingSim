@@ -177,8 +177,8 @@ func _animate(delta: float) -> void:
 	match state:
 		State.CHASE:
 			# Aggressive, lurching bob
-			var bob   := abs(sin(t * 4.8)) * 0.09
-			var lurch := sin(t * 1.2) * 0.035
+			var bob   : float = absf(sin(t * 4.8)) * 0.09
+			var lurch : float = sin(t * 1.2) * 0.035
 			mesh.position.y = bob + lurch
 
 			# Wild head tilts
@@ -190,12 +190,12 @@ func _animate(delta: float) -> void:
 			right_arm.rotation.x = 0.28 - sin(t * 4.8)  * 0.38
 
 			# Eyes pulse larger – unsettling flicker
-			var pulse := 0.58 + abs(sin(t * 7.5)) * 0.12
+			var pulse : float = 0.58 + absf(sin(t * 7.5)) * 0.12
 			left_eye.scale  = Vector3(pulse, pulse, pulse)
 			right_eye.scale = Vector3(pulse, pulse, pulse)
 
 		State.WANDER:
-			mesh.position.y     = abs(sin(t * 2.4)) * 0.05
+			mesh.position.y     = absf(sin(t * 2.4)) * 0.05
 			head.rotation.z     = sin(t * 0.95)  * 0.10
 			head.rotation.x     = -0.07
 			left_arm.rotation.x  = 0.28 + sin(t * 2.4) * 0.20
