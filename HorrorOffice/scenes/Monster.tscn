@@ -60,7 +60,7 @@ mesh = SubResource("BoxMesh_arm")
 surface_material_override/0 = SubResource("Mat_arm")
 
 [node name="Head" type="Node3D" parent="."]
-position = Vector3(0, 2.72, 0)
+position = Vector3(0, 2.55, 0)
 
 [node name="HeadMesh" type="MeshInstance3D" parent="Head"]
 mesh = SubResource("SphereMesh_head")

@@ -40,7 +40,7 @@ mesh = SubResource("BoxMesh_panel")
 surface_material_override/0 = SubResource("Mat_door")
 
 [node name="Handle" type="MeshInstance3D" parent="Pivot/DoorBody"]
-position = Vector3(0.42, 0.0, 0.06)
+position = Vector3(-0.42, 0.0, 0.06)
 mesh = SubResource("SphereMesh_handle")
 surface_material_override/0 = SubResource("Mat_handle")
 

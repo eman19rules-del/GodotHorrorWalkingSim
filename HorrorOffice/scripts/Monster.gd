@@ -172,7 +172,7 @@ func _pick_wander_target() -> void:
 
 # ── Animation ─────────────────────────────────────────────────────────────────
 func _animate(delta: float) -> void:
-	var t := Time.get_ticks_msec() * 0.001  # seconds
+	var t : float = float(Time.get_ticks_msec()) * 0.001  # seconds
 
 	match state:
 		State.CHASE:

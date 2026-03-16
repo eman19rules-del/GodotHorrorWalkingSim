@@ -67,6 +67,8 @@ func _build_main_corridor() -> void:
 	_floor(0.0,  0.0, -38.0, 4.0, 86.0, C_CORR_FLOOR)
 	_ceil( 0.0,  H,   -38.0, 4.0, 86.0)
 
+	# South end cap (behind player at spawn)
+	_wall_solid_z(0.0,   5.0, 4.0, C_CORR_WALL)
 	# North end cap
 	_wall_solid_z(0.0, -81.0, 4.0, C_CORR_WALL)
 
