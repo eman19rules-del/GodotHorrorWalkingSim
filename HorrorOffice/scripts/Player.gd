@@ -14,13 +14,19 @@ const STAMINA_MAX    := 100.0
 const STAMINA_DRAIN  := 28.0
 const STAMINA_REGEN  := 16.0
 const INTERACT_DIST  := 2.8
+const HEALTH_MAX     := 100.0
+const HEALTH_DRAIN   := 20.0   # 5 seconds of continuous contact = death
 
 # ── State ─────────────────────────────────────────────────────────────────────
 var stamina       : float = STAMINA_MAX
+var health        : float = HEALTH_MAX
 var can_sprint    : bool  = true
 var is_dead       : bool  = false
 var bob_time      : float = 0.0
 var cam_default_y : float = 0.0
+
+# ── Debug ──────────────────────────────────────────────────────────────────────
+var invincible    : bool  = false   # toggle with Ctrl+I
 
 # ── Node refs ─────────────────────────────────────────────────────────────────
 @onready var head        : Node3D   = $Head
@@ -43,6 +49,15 @@ func _input(event: InputEvent) -> void:
 		head.rotation.x = clamp(head.rotation.x, -deg_to_rad(80), deg_to_rad(80))
 	if event.is_action_pressed("toggle_flashlight"):
 		flashlight.visible = !flashlight.visible
+	# ── Debug: Ctrl+I toggles invincibility ───────────────────────────────────
+	if event is InputEventKey and event.pressed and not event.echo \
+			and event.keycode == KEY_I and event.ctrl_pressed:
+		invincible = !invincible
+		var msg := "[DEBUG] INVINCIBLE ON" if invincible else "[DEBUG] Invincible OFF"
+		GameManager.set_interact_hint(msg)
+		get_tree().create_timer(2.0).timeout.connect(
+			func() -> void: GameManager.clear_interact_hint(), CONNECT_ONE_SHOT
+		)
 
 func _physics_process(delta: float) -> void:
 	if is_dead:
@@ -120,7 +135,15 @@ func _update_interact_hint() -> void:
 	else:
 		GameManager.clear_interact_hint()
 
-# ── Called by Monster when caught ────────────────────────────────────────────
+# ── Called by Monster each frame while in contact ────────────────────────────
+func take_damage(delta: float) -> void:
+	if is_dead or invincible:
+		return
+	health = max(0.0, health - HEALTH_DRAIN * delta)
+	GameManager.update_health(health / HEALTH_MAX)
+	if health <= 0.0:
+		die()
+
 func die() -> void:
 	if is_dead:
 		return
