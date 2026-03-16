@@ -1,0 +1,53 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scripts/Door.gd" id="1"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_panel"]
+size = Vector3(1.1, 2.22, 0.07)
+
+[sub_resource type="BoxMesh" id="BoxMesh_panel"]
+size = Vector3(1.1, 2.22, 0.07)
+
+[sub_resource type="StandardMaterial3D" id="Mat_door"]
+albedo_color = Color(0.52, 0.36, 0.22, 1)
+roughness = 0.85
+
+[sub_resource type="StandardMaterial3D" id="Mat_handle"]
+albedo_color = Color(0.7, 0.65, 0.3, 1)
+metallic = 0.9
+roughness = 0.2
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_prompt"]
+size = Vector3(2.2, 2.5, 1.8)
+
+[sub_resource type="SphereMesh" id="SphereMesh_handle"]
+radius = 0.045
+height = 0.09
+
+[node name="Door" type="Node3D"]
+script = ExtResource("1")
+
+[node name="Pivot" type="Node3D" parent="."]
+
+[node name="DoorBody" type="StaticBody3D" parent="Pivot"]
+position = Vector3(-0.575, 1.11, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Pivot/DoorBody"]
+shape = SubResource("BoxShape3D_panel")
+
+[node name="Mesh" type="MeshInstance3D" parent="Pivot/DoorBody"]
+mesh = SubResource("BoxMesh_panel")
+surface_material_override/0 = SubResource("Mat_door")
+
+[node name="Handle" type="MeshInstance3D" parent="Pivot/DoorBody"]
+position = Vector3(0.42, 0.0, 0.06)
+mesh = SubResource("SphereMesh_handle")
+surface_material_override/0 = SubResource("Mat_handle")
+
+[node name="PromptArea" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 1
+
+[node name="PromptCollision" type="CollisionShape3D" parent="PromptArea"]
+position = Vector3(0, 1.11, 0)
+shape = SubResource("BoxShape3D_prompt")
