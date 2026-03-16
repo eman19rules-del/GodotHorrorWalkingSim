@@ -7,12 +7,13 @@ signal horror_level_changed(level: int)
 signal game_over_triggered
 signal game_won_triggered
 
-var horror_level: int = 0
-var is_game_over: bool = false
-var has_exit_key: bool = false
+var horror_level   : int        = 0
+var is_game_over   : bool       = false
+var collected_keys : Dictionary = {}   # key_id → true
 
 var _interact_label: Label = null
 var _stamina_bar: ProgressBar = null
+var _health_bar: ProgressBar = null
 var _death_screen: Control = null
 var _win_screen: Control = null
 var _vignette: ColorRect = null
@@ -22,6 +23,7 @@ var _vignette: ColorRect = null
 func register_hud(hud: CanvasLayer) -> void:
 	_interact_label = hud.get_node_or_null("InteractLabel")
 	_stamina_bar    = hud.get_node_or_null("StaminaBar")
+	_health_bar     = hud.get_node_or_null("HealthBar")
 	_death_screen   = hud.get_node_or_null("DeathScreen")
 	_win_screen     = hud.get_node_or_null("WinScreen")
 	_vignette       = hud.get_node_or_null("Vignette")
@@ -49,6 +51,10 @@ func update_stamina(pct: float) -> void:
 	if _stamina_bar:
 		_stamina_bar.value = pct * 100.0
 
+func update_health(pct: float) -> void:
+	if _health_bar:
+		_health_bar.value = pct * 100.0
+
 func set_vignette_intensity(t: float) -> void:
 	# t: 0.0 = invisible, 1.0 = full red/dark vignette
 	if _vignette:
@@ -73,8 +79,13 @@ func trigger_win() -> void:
 	if _win_screen:
 		_win_screen.visible = true
 
-func pickup_key() -> void:
-	has_exit_key = true
-	set_interact_hint("You found the exit key!")
-	await get_tree().create_timer(2.0).timeout
+func has_key(key_id: String) -> bool:
+	return collected_keys.get(key_id, false)
+
+func pickup_key(key_id: String = "key_exit") -> void:
+	collected_keys[key_id] = true
+	var msg := "You found the exit key!" if key_id == "key_exit" \
+		else "Key found — a locked door ahead is now open."
+	set_interact_hint(msg)
+	await get_tree().create_timer(2.5).timeout
 	clear_interact_hint()

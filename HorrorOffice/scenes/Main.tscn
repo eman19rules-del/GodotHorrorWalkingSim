@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3]
+[gd_scene load_steps=10 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/Player.tscn"  id="1"]
 [ext_resource type="PackedScene" path="res://scenes/Door.tscn"    id="2"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script"      path="res://scripts/LevelGenerator.gd"    id="4"]
 [ext_resource type="Script"      path="res://scripts/HorrorProgression.gd" id="5"]
 [ext_resource type="Script"      path="res://scripts/Main.gd"               id="6"]
+[ext_resource type="Script"      path="res://scripts/MiniMap.gd"            id="7"]
 
 [sub_resource type="Environment" id="Env_main"]
 background_mode = 1
@@ -66,6 +67,19 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
 
+[node name="HealthBar" type="ProgressBar" parent="HUD"]
+anchor_left = 0.0
+anchor_top = 1.0
+anchor_right = 0.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = -68.0
+offset_right = 220.0
+offset_bottom = -43.0
+value = 100.0
+show_percentage = false
+modulate = Color(1.0, 0.3, 0.3, 1.0)
+
 [node name="StaminaBar" type="ProgressBar" parent="HUD"]
 anchor_left = 0.0
 anchor_top = 1.0
@@ -103,8 +117,7 @@ offset_left = -200.0
 offset_top = -40.0
 offset_right = 200.0
 offset_bottom = 40.0
-text = "YOU WERE CAUGHT
-Press R to restart"
+text = "YOU WERE CAUGHT"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -126,8 +139,7 @@ offset_left = -200.0
 offset_top = -40.0
 offset_right = 200.0
 offset_bottom = 40.0
-text = "YOU ESCAPED
-Press R to restart"
+text = "YOU ESCAPED"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -144,6 +156,18 @@ offset_bottom = 10.0
 text = "·"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="MiniMap" type="Control" parent="HUD"]
+script = ExtResource("7")
+anchor_left = 1.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 0.0
+offset_left = -140.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = 215.0
+mouse_filter = 2
 
 [node name="ControlsPanel" type="Control" parent="HUD"]
 anchor_left = 1.0
