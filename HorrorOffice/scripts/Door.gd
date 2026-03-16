@@ -45,7 +45,7 @@ func interact() -> void:
 
 	# Determine which side the player is on so we can swing away from them.
 	var player := get_tree().get_first_node_in_group("player")
-	var ppos   := player.global_position if player else global_position + global_transform.basis.z
+	var ppos   : Vector3 = player.global_position if player else global_position + global_transform.basis.z
 	_toggle(ppos)
 
 func _toggle(player_world_pos: Vector3) -> void:
