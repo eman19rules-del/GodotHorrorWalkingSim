@@ -3,6 +3,42 @@ HorrorOffice/.godot/
 
 # macOS
 .DS_Store
+**/.DS_Store
 
 # Claude local settings
 .claude/settings.local.json
+
+# Swift / Xcode
+*.xcuserdata/
+*.xcworkspace/xcuserdata/
+DerivedData/
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata/
+*.moved-aside
+*.xccheckout
+*.xcscmblueprint
+
+# Swift Package Manager
+.build/
+.swiftpm/
+*.resolved
+
+# Environment / secrets
+.env
+Backend/.env
+
+# CocoaPods (if ever used)
+Pods/
+Podfile.lock
+
+# Simulator
+*.ipa
+*.dSYM.zip
+*.dSYM
